@@ -1,0 +1,13 @@
+export { default as TextName } from '@/components/ProForm/ProFormTextName';
+export { default as TextEmail } from '@/components/ProForm/ProFormTextEmail';
+export { default as TextPassword } from '@/components/ProForm/ProFormTextPassword';
+export { default as TextPhone } from '@/components/ProForm/ProFormTextPhone';
+export { default as TextCode } from '@/components/ProForm/ProFormTextCode';
+export { default as Sort } from '@/components/ProForm/ProFormSort';
+export { default as SelectTypeResource } from '@/components/ProForm/ProFormSelectTypeResource';
+export { default as SelectScope } from '@/components/ProForm/ProFormSelectScope';
+export { default as HideInMenu } from '@/components/ProForm/ProFormHideInMenu';
+export { default as SelectColor } from '@/components/ProForm/ProFormColor';
+export { default as UploadAvatar } from '@/components/ProForm/ProFormAvatar';
+export { default as SelectRole } from '@/components/ProForm/ProFormSelectRole';
+export { default as SelectGender } from '@/components/ProForm/ProFormSelectGender';
