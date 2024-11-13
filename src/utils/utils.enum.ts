@@ -236,8 +236,12 @@ export const ErrorNotify = [
   { url: 'users/status', method: ['put'] },
   { url: 'users', method: ['patch', 'post', 'delete'] },
   { url: 'users/internal/change-password', method: ['put'] },
-  { url: 'applications', method: ['patch', 'post', 'delete'] },
-  { url: 'tests', method: ['patch', 'post', 'delete'] },
+  { url: 'areas', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'floors', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'rooms', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'room-types', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'customers', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'rental-vouchers', method: ['patch', 'post', 'delete', 'put'] },
 ];
 
 export const SuccessNotify = [
@@ -253,13 +257,17 @@ export const SuccessNotify = [
   { url: 'users/status', method: ['put'] },
   { url: 'users', method: ['patch', 'post', 'delete'] },
   { url: 'users/internal/change-password', method: ['put'] },
-  { url: 'applications', method: ['patch', 'post', 'delete'] },
-  { url: 'tests', method: ['patch', 'post', 'delete'] },
+  { url: 'areas', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'floors', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'rooms', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'room-types', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'customers', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'rental-vouchers', method: ['patch', 'post', 'delete', 'put'] },
 ];
 
 export const loginPath = '/auth/login';
 
-export const dashboardPath = '/dashboard';
+export const dashboardPath = '/hotel/room';
 
 export enum ENUM_RESOURCE {
   USER = 'USER',
@@ -268,6 +276,12 @@ export enum ENUM_RESOURCE {
   SCOPE = 'SCOPE',
   RESOURCE = 'RESOURCE',
   PROFILE = 'PROFILE',
+  AREA = 'AREA',
+  FLOOR = 'FLOOR',
+  ROOM = 'ROOM',
+  ROOM_TYPE = 'ROOM_TYPE',
+  CUSTOMER = 'CUSTOMER',
+  RENTAL_VOUCHER = 'RENTAL_VOUCHER',
 }
 
 export type ENUM_RESOURCE_KEYS = keyof typeof ENUM_RESOURCE;
@@ -324,6 +338,54 @@ export const STATUS = {
     text: 'Không hoạt động',
     key: ENUM_STATUS.INACTIVE,
     id: 'pages.status.INACTIVE',
+  },
+};
+
+export enum ENUM_ROOM_STATUS {
+  'AVAILABLE' = 'AVAILABLE',
+  'BOOKED' = 'BOOKED',
+}
+
+export const ROOM_STATUS = {
+  [ENUM_ROOM_STATUS.AVAILABLE]: {
+    text: 'Còn trống',
+    key: ENUM_ROOM_STATUS.AVAILABLE,
+    id: 'pages.room_status.available',
+  },
+  [ENUM_ROOM_STATUS.BOOKED]: {
+    text: 'Đã đặt',
+    key: ENUM_ROOM_STATUS.BOOKED,
+    id: 'pages.room_status.booked',
+  },
+};
+
+export enum ENUM_RENTAL_VOUCHER_STATUS {
+  BOOKED = 'BOOKED',
+  CHECK_IN = 'CHECK_IN',
+  CHECK_OUT = 'CHECK_OUT',
+  CANCEL = 'CANCEL',
+}
+
+export const RENTAL_VOUCHER_STATUS = {
+  [ENUM_RENTAL_VOUCHER_STATUS.BOOKED]: {
+    text: 'Đã đặt',
+    key: ENUM_RENTAL_VOUCHER_STATUS.BOOKED,
+    id: 'pages.rental_voucher_status.booked',
+  },
+  [ENUM_RENTAL_VOUCHER_STATUS.CHECK_IN]: {
+    text: 'Đã nhận phòng',
+    key: ENUM_RENTAL_VOUCHER_STATUS.CHECK_IN,
+    id: 'pages.rental_voucher_status.check_in',
+  },
+  [ENUM_RENTAL_VOUCHER_STATUS.CHECK_OUT]: {
+    text: 'Đã trả phòng',
+    key: ENUM_RENTAL_VOUCHER_STATUS.CHECK_OUT,
+    id: 'pages.rental_voucher_status.check_out',
+  },
+  [ENUM_RENTAL_VOUCHER_STATUS.CANCEL]: {
+    text: 'Đã hủy',
+    key: ENUM_RENTAL_VOUCHER_STATUS.CANCEL,
+    id: 'pages.rental_voucher_status.cancel',
   },
 };
 

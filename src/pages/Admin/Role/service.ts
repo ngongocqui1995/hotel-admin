@@ -25,16 +25,20 @@ export async function queryRoles(params: any, sort: any = {}): Promise<QueryRole
       field: key,
       order: value as QuerySortOperator,
     })),
-    queryOr: search.map((it) => ({
-      field: it,
-      operator: CondOperator.CONTAINS_LOW,
-      value: params.keyword,
-    })),
-    queryFilter: Object.entries(_.pickBy(paramsFilter)).map(([key, value]) => ({
-      field: key,
-      operator: CondOperator.EQUALS,
-      value,
-    })),
+    search: {
+      $and: [
+        {
+          $or: search.map((it) => {
+            return {
+              $and: [{ [it]: { [CondOperator.CONTAINS_LOW]: params.keyword } }],
+            };
+          }),
+        },
+        ...Object.entries(_.pickBy(paramsFilter)).map(([key, value]) => ({
+          [key]: { [CondOperator.EQUALS]: value },
+        })),
+      ],
+    },
   });
 
   const res = await request(`roles?${queryString}`, {
@@ -61,16 +65,20 @@ export async function getAllRoles(params: any): Promise<RoleItem[]> {
       field: key,
       order: value as QuerySortOperator,
     })),
-    queryOr: search.map((it) => ({
-      field: it,
-      operator: CondOperator.CONTAINS_LOW,
-      value: params.keyword,
-    })),
-    queryFilter: Object.entries(_.pickBy(paramsFilter)).map(([key, value]) => ({
-      field: key,
-      operator: CondOperator.EQUALS,
-      value,
-    })),
+    search: {
+      $and: [
+        {
+          $or: search.map((it) => {
+            return {
+              $and: [{ [it]: { [CondOperator.CONTAINS_LOW]: params.keyword } }],
+            };
+          }),
+        },
+        ...Object.entries(_.pickBy(paramsFilter)).map(([key, value]) => ({
+          [key]: { [CondOperator.EQUALS]: value },
+        })),
+      ],
+    },
   });
 
   return await request(`roles?${queryString}`, { method: 'GET' });

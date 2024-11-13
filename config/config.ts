@@ -51,7 +51,7 @@ export default defineConfig({
    * @name layout
    * @doc https://umijs.org/docs/max/layout-menu
    */
-  title: 'GSTATION',
+  title: 'HOTEL MANAGEMENT',
   layout: {
     locale: true,
     ...defaultSettings,
@@ -87,10 +87,10 @@ export default defineConfig({
    */
   access: {},
   metas: [
-    { name: 'keywords', content: 'gstation' },
+    { name: 'keywords', content: 'hotel' },
     {
       name: 'description',
-      content: 'Gstation',
+      content: 'hotel',
     },
   ],
 

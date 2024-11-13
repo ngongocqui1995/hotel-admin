@@ -1,4 +1,3 @@
-import { TextEmail, TextName, TextPassword, TextPhone } from '@/components/ProForm';
 import { useLoginStyles } from '@/pages/Auth/Login/styles';
 import { getFormatMessage, getLocales, saveToken, validationPassWord } from '@/utils/utils';
 import { dashboardPath } from '@/utils/utils.enum';
@@ -6,12 +5,13 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginFormPage, ProForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, SelectLang, history, useModel } from '@umijs/max';
 import { useSetState } from 'ahooks';
-import { Tabs } from 'antd';
 import to from 'await-to-js';
 import React, { useEffect } from 'react';
 import LottiePlayer from './components/LottiePlayer';
 import { LoginParams, RegisterParams } from './data';
 import { authLogin, authProfile, authRegister } from './services';
+import { Tabs } from 'antd';
+import { TextEmail, TextName, TextPassword, TextPhone } from '@/components/ProForm';
 
 type KeyTab = 'login' | 'register';
 
@@ -85,8 +85,8 @@ const Login: React.FC = () => {
       <LoginFormPage
         form={form}
         backgroundImageUrl="https://gw.alipayobjects.com/zos/rmsportal/FfdJeJRQWjEeGTpqgBKj.png"
-        title={(<img src="/logo.png" style={{ height: 22, padding: '0 10px' }} />) as any}
-        // subTitle={<h2>{formatMessage({ id: 'pages.login.title' })}</h2>}
+        title="Hotel Management"
+        subTitle="Welcome to Hotel Management"
         initialValues={{ autoLogin: true }}
         activityConfig={{
           style: {

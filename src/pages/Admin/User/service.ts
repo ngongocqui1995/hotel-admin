@@ -25,16 +25,20 @@ export async function queryUsers(params: any, sort: any = {}): Promise<QueryUser
       field: key,
       order: value as QuerySortOperator,
     })),
-    queryOr: search.map((it) => ({
-      field: it,
-      operator: CondOperator.CONTAINS_LOW,
-      value: params.keyword,
-    })),
-    queryFilter: Object.entries(queryFilter).map(([key, value]) => ({
-      field: key,
-      operator: CondOperator.EQUALS,
-      value,
-    })),
+    search: {
+      $and: [
+        {
+          $or: search.map((it) => {
+            return {
+              $and: [{ [it]: { [CondOperator.CONTAINS_LOW]: params.keyword } }],
+            };
+          }),
+        },
+        ...Object.entries(queryFilter).map(([key, value]) => ({
+          [key]: { [CondOperator.EQUALS]: value },
+        })),
+      ],
+    },
     queryJoin: [{ field: 'role' }],
   });
 

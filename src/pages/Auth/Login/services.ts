@@ -38,7 +38,7 @@ export const authRefresh = async (refreshToken: string) => {
 };
 
 export const authRegister = async (data: RegisterParams) => {
-  const res = await request('auth/register', { method: 'POST', data });
+  const res = await request('customers', { method: 'POST', data });
   return res;
 };
 

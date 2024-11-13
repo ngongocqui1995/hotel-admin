@@ -194,7 +194,7 @@ const RoleChildList: React.FC<RoleChildListProps> = (props) => {
     return (
       <Card>
         <ProTable<MenuItem>
-          rowKey="id"
+          rowKey={(_, i) => `${i}`}
           search={false}
           cardProps={{ bodyStyle: { padding: 0 } }}
           bordered

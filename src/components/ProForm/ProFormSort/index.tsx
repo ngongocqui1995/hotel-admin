@@ -3,7 +3,7 @@ import { ProFormDigitProps } from '@ant-design/pro-components';
 import { ProFormDigit } from '@ant-design/pro-form';
 import React from 'react';
 
-const ProFormHideInMenu: React.FC<ProFormDigitProps> = (props) => {
+const ProFormSort: React.FC<ProFormDigitProps> = (props) => {
   const formatMessage = getFormatMessage();
 
   return (
@@ -16,4 +16,4 @@ const ProFormHideInMenu: React.FC<ProFormDigitProps> = (props) => {
   );
 };
 
-export default ProFormHideInMenu;
+export default ProFormSort;

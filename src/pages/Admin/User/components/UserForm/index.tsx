@@ -51,7 +51,7 @@ const UserForm: React.FC = () => {
     if (!user.UserForm?.type) return;
     return (
       <>
-        {[CREATE, UPDATE].includes(user.UserForm?.type) && (
+        {[CREATE, UPDATE, COPY].includes(user.UserForm?.type) && (
           <>
             <UploadAvatar />
             <TextName />
@@ -177,7 +177,8 @@ const UserForm: React.FC = () => {
           onFinish={async (values) => {
             let res;
             switch (user.UserForm?.type) {
-              case CREATE: {
+              case CREATE:
+              case COPY: {
                 res = await createUser(values);
                 break;
               }

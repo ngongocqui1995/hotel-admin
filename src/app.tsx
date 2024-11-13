@@ -21,6 +21,12 @@ import Resource from './pages/Admin/Resource';
 import Scope from './pages/Admin/Scope';
 import Account from './pages/Account';
 import to from 'await-to-js';
+import Area from '@/pages/Hotel/Area';
+import Floor from '@/pages/Hotel/Floor';
+import Room from '@/pages/Hotel/Room';
+import RoomType from '@/pages/Hotel/RoomType';
+import Customer from '@/pages/Admin/Customer';
+import RentalVoucher from '@/pages/RentalVoucher';
 
 let menus: MenuItem[];
 let userInfo: UserItem | undefined;
@@ -49,6 +55,12 @@ const RESOURCE_COMPONENT = {
   [ENUM_RESOURCE.RESOURCE]: <Resource />,
   [ENUM_RESOURCE.SCOPE]: <Scope />,
   [ENUM_RESOURCE.PROFILE]: <Account />,
+  [ENUM_RESOURCE.AREA]: <Area />,
+  [ENUM_RESOURCE.FLOOR]: <Floor />,
+  [ENUM_RESOURCE.ROOM]: <Room />,
+  [ENUM_RESOURCE.ROOM_TYPE]: <RoomType />,
+  [ENUM_RESOURCE.CUSTOMER]: <Customer />,
+  [ENUM_RESOURCE.RENTAL_VOUCHER]: <RentalVoucher />,
 };
 
 const getChildrenRoute = (menus: MenuItem[]): any[] => {
@@ -130,7 +142,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     },
     menuHeaderRender: undefined,
     headerTitleRender: () => (
-      <a>{<img src="/logo.png" style={{ height: 22, padding: '0 10px' }} />}</a>
+      <a>{<img src="/logo.png" style={{ height: 40, padding: '0 10px' }} />}</a>
     ),
     unAccessible: <AccessPage />,
     noFound: <NoFoundPage />,

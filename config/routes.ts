@@ -27,12 +27,6 @@ export default [
     ],
   },
   {
-    path: '/dashboard',
-    name: 'Dashboard',
-    icon: 'dashboard',
-    component: './Dashboard',
-  },
-  {
     path: '/',
     redirect: '/dashboard',
   },

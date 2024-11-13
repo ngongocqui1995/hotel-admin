@@ -191,10 +191,10 @@
           </div>
         </div>
         <div class="loading-title">
-          G-Station
+          Hotel Management System
         </div>
         <div class="loading-sub-title">
-          G-Station System
+          Hotel Management System is a web application that helps hotel managers to manage their hotels.
         </div>
       </div>
     `;

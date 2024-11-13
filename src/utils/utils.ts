@@ -1,10 +1,24 @@
 import { isBrowser } from '@ant-design/pro-components';
-import { QueryFilter, QueryJoin, QuerySort, RequestQueryBuilder } from '@nestjsx/crud-request';
+import {
+  QueryFilter,
+  QueryJoin,
+  QuerySort,
+  RequestQueryBuilder,
+  SCondition,
+} from '@nestjsx/crud-request';
 import _ from 'lodash';
 import { decrypt, encrypt } from '../../crypto';
 import enUSLocal from '../locales/en-US';
 import viVNLocal from '../locales/vi-VN';
-import { ENUM_LANG, GENDER, RESOURCE_TYPE, STATUS, defaultLangUConfigMap } from './utils.enum';
+import {
+  ENUM_LANG,
+  GENDER,
+  RENTAL_VOUCHER_STATUS,
+  RESOURCE_TYPE,
+  ROOM_STATUS,
+  STATUS,
+  defaultLangUConfigMap,
+} from './utils.enum';
 
 const KEY_GSTATION_API = 'GSTATION_API';
 
@@ -217,6 +231,30 @@ export const getStatusEnum = () => {
   return newObj;
 };
 
+export const getRoomStatusEnum = () => {
+  const formatMessage = getFormatMessage();
+  const newObj: any = {};
+  _.forOwn(ROOM_STATUS, (value, key) => {
+    newObj[key] = {
+      ...value,
+      text: formatMessage({ id: value.id as LocalesLocal, defaultMessage: value.text }),
+    };
+  });
+  return newObj;
+};
+
+export const getRentalVoucherStatusEnum = () => {
+  const formatMessage = getFormatMessage();
+  const newObj: any = {};
+  _.forOwn(RENTAL_VOUCHER_STATUS, (value, key) => {
+    newObj[key] = {
+      ...value,
+      text: formatMessage({ id: value.id as LocalesLocal, defaultMessage: value.text }),
+    };
+  });
+  return newObj;
+};
+
 export const getResourceTypeEnum = () => {
   const formatMessage = getFormatMessage();
   const newObj: any = {};
@@ -253,13 +291,16 @@ export const renameKeys = (obj: { [key: string]: string }, newKeys: { [key: stri
 export const getQueryString = (payload?: {
   queryJoin?: QueryJoin[];
   querySort?: QuerySort[];
-  queryOr?: QueryFilter[];
+  queryOr?: QueryFilter[] | QueryFilter[][];
   queryFilter?: QueryFilter[];
+  search?: SCondition;
 }) => {
   const qb = RequestQueryBuilder.create();
+  console.log(payload?.queryOr);
   payload?.queryJoin?.forEach((join) => qb.setJoin(join));
-  payload?.querySort?.forEach((sort) => qb.sortBy(sort));
-  payload?.queryOr?.forEach((filter) => qb.setOr(filter));
   payload?.queryFilter?.forEach((filter) => qb.setFilter(filter));
+  payload?.queryOr?.forEach((filter) => qb.setOr(filter));
+  payload?.querySort?.forEach((sort) => qb.sortBy(sort));
+  if (payload?.search) qb.search(payload.search);
   return qb.query();
 };

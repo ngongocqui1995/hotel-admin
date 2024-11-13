@@ -10,7 +10,7 @@ import { CondOperator, QuerySortOperator } from '@nestjsx/crud-request';
 import { request } from '@umijs/max';
 import _ from 'lodash';
 
-const keyword_params = ['url'];
+const keyword_params = ['code', 'name'];
 
 export async function queryResources(params: any, sort: any = {}): Promise<QueryResources> {
   const { current, pageSize, keyword, resource, ...paramsFilter } = params;
@@ -21,26 +21,32 @@ export async function queryResources(params: any, sort: any = {}): Promise<Query
   const queryFilter = renameKeys(_.pickBy({ ...paramsFilter, resource }), {
     resource: 'resource.id',
   });
-  const filterResource = resource ? [] : [{ field: 'resource.id', operator: CondOperator.IS_NULL }];
+  const filterResource = resource
+    ? []
+    : [{ field: 'resource.id', operator: CondOperator.IS_NULL, value: true }];
 
   const queryString = getQueryString({
     querySort: Object.entries(sorts).map(([key, value]) => ({
       field: key,
       order: value as QuerySortOperator,
     })),
-    queryOr: search.map((it) => ({
-      field: it,
-      operator: CondOperator.CONTAINS_LOW,
-      value: params.keyword,
-    })),
-    queryFilter: [
-      ...Object.entries(queryFilter).map(([key, value]) => ({
-        field: key,
-        operator: CondOperator.EQUALS,
-        value,
-      })),
-      ...filterResource,
-    ],
+    search: {
+      $and: [
+        {
+          $or: search.map((it) => {
+            return {
+              $and: [{ [it]: { [CondOperator.CONTAINS_LOW]: params.keyword } }],
+            };
+          }),
+        },
+        ...Object.entries(queryFilter).map(([key, value]) => ({
+          [key]: { [CondOperator.EQUALS]: value },
+        })),
+        ...filterResource.map((filter) => ({
+          [filter.field]: { [filter.operator]: filter.value },
+        })),
+      ],
+    },
     queryJoin: [
       { field: 'resource' },
       { field: 'resources' },
