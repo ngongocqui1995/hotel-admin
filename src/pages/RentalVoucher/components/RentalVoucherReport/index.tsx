@@ -31,20 +31,26 @@ const RentalVoucherReport = () => {
   const [form] = ProForm.useForm();
 
   useEffect(() => {
-    (async () => {
-      const [dataMonth, dataYear] = await Promise.all([
-        getRentalVoucherMonthReport(dayjs().toISOString()),
-        getRentalVoucherYearReport(dayjs().toISOString()),
-      ]);
-      setMonth(dataMonth?.data || []);
-      setYear(dataYear?.data || []);
-      setTotalMonth(dataMonth?.total || 0);
-      setTotalYear(dataYear?.total || 0);
-      form.setFieldsValue({
-        month: dayjs().format('YYYY-MM'),
-        year: dayjs().format('YYYY'),
-      });
-    })();
+    if (rentalVoucher.RentalVoucherReport?.type) {
+      (async () => {
+        setMonthLoading(true);
+        setYearLoading(true);
+        const [dataMonth, dataYear] = await Promise.all([
+          getRentalVoucherMonthReport(dayjs().toISOString()),
+          getRentalVoucherYearReport(dayjs().toISOString()),
+        ]);
+        setMonth(dataMonth?.data || []);
+        setYear(dataYear?.data || []);
+        setTotalMonth(dataMonth?.total || 0);
+        setTotalYear(dataYear?.total || 0);
+        form.setFieldsValue({
+          month: dayjs().format('YYYY-MM'),
+          year: dayjs().format('YYYY'),
+        });
+        setMonthLoading(false);
+        setYearLoading(false);
+      })();
+    }
     setModalVisible(!!rentalVoucher.RentalVoucherReport?.type);
   }, [rentalVoucher.RentalVoucherReport?.type]);
 

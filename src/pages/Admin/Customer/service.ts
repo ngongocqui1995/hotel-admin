@@ -19,7 +19,7 @@ export async function queryCustomers(params: any, sort: any = {}): Promise<Query
 
   const querySort = _.isEmpty(sort) ? { updatedAt: 'DESC' } : sort;
   const sorts = renameValues(querySort, { ascend: 'ASC', descend: 'DESC' });
-  const queryFilter = _.pickBy(renameKeys(paramsFilter, { role: 'role.id' }));
+  const queryFilter = _.pickBy(renameKeys(paramsFilter, { role: 'customer_role.id' }));
 
   const queryString = getQueryString({
     querySort: Object.entries(sorts).map(([key, value]) => ({

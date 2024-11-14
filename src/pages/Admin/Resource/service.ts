@@ -19,11 +19,11 @@ export async function queryResources(params: any, sort: any = {}): Promise<Query
   const querySort = _.isEmpty(sort) ? { updatedAt: 'DESC' } : sort;
   const sorts = renameValues(querySort, { ascend: 'ASC', descend: 'DESC' });
   const queryFilter = renameKeys(_.pickBy({ ...paramsFilter, resource }), {
-    resource: 'resource.id',
+    resource: 'resource_parent.id',
   });
   const filterResource = resource
     ? []
-    : [{ field: 'resource.id', operator: CondOperator.IS_NULL, value: true }];
+    : [{ field: 'resource_parent.id', operator: CondOperator.IS_NULL, value: true }];
 
   const queryString = getQueryString({
     querySort: Object.entries(sorts).map(([key, value]) => ({
