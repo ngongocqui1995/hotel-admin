@@ -27,6 +27,8 @@ import Room from '@/pages/Hotel/Room';
 import RoomType from '@/pages/Hotel/RoomType';
 import Customer from '@/pages/Admin/Customer';
 import RentalVoucher from '@/pages/RentalVoucher';
+import RootUser from '@/pages/Admin/RootUser';
+import AdminUser from '@/pages/Admin/AdminUser';
 
 let menus: MenuItem[];
 let userInfo: UserItem | undefined;
@@ -61,6 +63,8 @@ const RESOURCE_COMPONENT = {
   [ENUM_RESOURCE.ROOM_TYPE]: <RoomType />,
   [ENUM_RESOURCE.CUSTOMER]: <Customer />,
   [ENUM_RESOURCE.RENTAL_VOUCHER]: <RentalVoucher />,
+  [ENUM_RESOURCE.ROOT_USER]: <RootUser />,
+  [ENUM_RESOURCE.ADMIN_USER]: <AdminUser />,
 };
 
 const getChildrenRoute = (menus: MenuItem[]): any[] => {

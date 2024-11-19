@@ -6,8 +6,8 @@ import {
   TextPhone,
   UploadAvatar,
 } from '@/components/ProForm';
-import { UserModalState } from '@/pages/Admin/User/model';
-import { changePassword, createUser, updateUser } from '@/pages/Admin/User/service';
+import { RootUserModalState } from '@/pages/Admin/RootUser/model';
+import { changePassword, createRootUser, updateRootUser } from '@/pages/Admin/RootUser/service';
 import { getFormatMessage } from '@/utils/utils';
 import { ENUM_SCOPE_TYPE } from '@/utils/utils.enum';
 import ProForm from '@ant-design/pro-form';
@@ -20,10 +20,10 @@ const formLayout = {
   wrapperCol: { span: 14 },
 };
 
-const UserForm: React.FC = () => {
+const RootUserForm: React.FC = () => {
   const formatMessage = getFormatMessage();
   const dispatch = useDispatch();
-  const user: UserModalState = useSelector((state: any) => state?.user);
+  const rootUser: RootUserModalState = useSelector((state: any) => state?.rootUser);
   const [modalVisible, setModalVisible] = useState(false);
   const modalRef = useRef(null);
   const [form] = ProForm.useForm();
@@ -31,31 +31,32 @@ const UserForm: React.FC = () => {
 
   useEffect(() => {
     (function () {
-      if (user.UserForm?.type) {
-        if (user.UserForm?.type === CREATE) {
+      if (rootUser.RootUserForm?.type) {
+        if (rootUser.RootUserForm?.type === CREATE) {
           form.resetFields();
         }
-        if ([UPDATE, COPY].includes(user.UserForm?.type)) {
+        if ([UPDATE, COPY].includes(rootUser.RootUserForm?.type)) {
           form.setFieldsValue({
-            ...user.UserForm.itemEdit,
+            ...rootUser.RootUserForm.itemEdit,
           });
         }
       }
-      setModalVisible(!!user.UserForm?.type);
+      setModalVisible(!!rootUser.RootUserForm?.type);
     })();
-  }, [user.UserForm?.type]);
+  }, [rootUser.RootUserForm?.type]);
 
   const renderContent = () => {
-    if (!user.UserForm?.type) return;
+    console.log('rootUser.RootUserForm?.type', rootUser.RootUserForm?.type);
+    if (!rootUser.RootUserForm?.type) return;
     return (
       <>
-        {[CREATE, UPDATE, COPY].includes(user.UserForm?.type) && (
+        {[CREATE, UPDATE, COPY].includes(rootUser.RootUserForm?.type) && (
           <>
             <UploadAvatar />
             <TextName />
             <TextPhone />
             <TextEmail />
-            {user.UserForm?.type !== UPDATE && <TextPassword />}
+            {rootUser.RootUserForm?.type !== UPDATE && <TextPassword />}
             <SelectGender
               fieldProps={{
                 getPopupContainer: (node) => (modalRef && modalRef.current) || node.parentNode,
@@ -63,7 +64,7 @@ const UserForm: React.FC = () => {
             />
           </>
         )}
-        {[UPDATE_PASSWORD].includes(user.UserForm?.type) && (
+        {[UPDATE_PASSWORD].includes(rootUser.RootUserForm?.type) && (
           <>
             <TextPassword
               name="new_password"
@@ -98,55 +99,55 @@ const UserForm: React.FC = () => {
   };
 
   const onCancel = () => {
-    dispatch({ type: 'user/updateUserForm', payload: { type: '', itemEdit: null } });
+    dispatch({ type: 'rootUser/updateRootUserForm', payload: { type: '', itemEdit: null } });
     form.resetFields();
   };
 
   const renderTitle = () => {
-    switch (user.UserForm?.type) {
+    switch (rootUser.RootUserForm?.type) {
       case CREATE:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.Create.title',
-          defaultMessage: 'Thêm mới người dùng',
+          id: 'pages.Admin.RootUser.RootUserForm.Create.title',
+          defaultMessage: 'Thêm mới khách hàng',
         });
       case UPDATE:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.Update.title',
-          defaultMessage: 'Cập nhật người dùng',
+          id: 'pages.Admin.RootUser.RootUserForm.Update.title',
+          defaultMessage: 'Cập nhật khách hàng',
         });
       case UPDATE_PASSWORD:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.UpdatePassword.title',
+          id: 'pages.Admin.RootUser.RootUserForm.UpdatePassword.title',
           defaultMessage: 'Đổi mật khẩu',
         });
       default:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.Create.title',
-          defaultMessage: 'Thêm mới người dùng',
+          id: 'pages.Admin.RootUser.RootUserForm.Create.title',
+          defaultMessage: 'Thêm mới khách hàng',
         });
     }
   };
 
   const renderSubmitText = () => {
-    switch (user.UserForm?.type) {
+    switch (rootUser.RootUserForm?.type) {
       case CREATE:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.Create.submitText',
+          id: 'pages.Admin.RootUser.RootUserForm.Create.submitText',
           defaultMessage: 'Tạo mới',
         });
       case UPDATE:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.Update.submitText',
+          id: 'pages.Admin.RootUser.RootUserForm.Update.submitText',
           defaultMessage: 'Cập nhật',
         });
       case UPDATE_PASSWORD:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.UpdatePassword.submitText',
+          id: 'pages.Admin.RootUser.RootUserForm.UpdatePassword.submitText',
           defaultMessage: 'Cập nhật',
         });
       default:
         return formatMessage({
-          id: 'pages.Admin.User.UserForm.Create.submitText',
+          id: 'pages.Admin.RootUser.RootUserForm.Create.submitText',
           defaultMessage: 'Tạo mới',
         });
     }
@@ -169,25 +170,25 @@ const UserForm: React.FC = () => {
           layout="horizontal"
           onFinish={async (values) => {
             let res;
-            switch (user.UserForm?.type) {
+            switch (rootUser.RootUserForm?.type) {
               case CREATE:
               case COPY: {
-                res = await createUser(values);
+                res = await createRootUser(values);
                 break;
               }
               case UPDATE: {
-                res = await updateUser(user.UserForm?.itemEdit?.id || '', values);
+                res = await updateRootUser(rootUser.RootUserForm?.itemEdit?.id || '', values);
                 break;
               }
               case UPDATE_PASSWORD: {
                 delete values.avatar;
-                res = await changePassword(user.UserForm?.itemEdit?.id || '', values);
+                res = await changePassword(rootUser.RootUserForm?.itemEdit?.id || '', values);
                 break;
               }
             }
             if (res) {
               onCancel();
-              user.UserList?.reload?.();
+              rootUser.RootUserList?.reload?.();
             }
           }}
           submitter={{
@@ -195,12 +196,14 @@ const UserForm: React.FC = () => {
             searchConfig: {
               submitText: renderSubmitText(),
               resetText: formatMessage({
-                id: 'pages.Admin.User.UserForm.resetText',
+                id: 'pages.Admin.RootUser.RootUserForm.resetText',
                 defaultMessage: 'Làm mới',
               }),
             },
             resetButtonProps: {
-              className: [UPDATE, UPDATE_PASSWORD].includes(user.UserForm?.type as ENUM_SCOPE_TYPE)
+              className: [UPDATE, UPDATE_PASSWORD].includes(
+                rootUser.RootUserForm?.type as ENUM_SCOPE_TYPE,
+              )
                 ? 'hidden'
                 : '',
             },
@@ -213,4 +216,4 @@ const UserForm: React.FC = () => {
   );
 };
 
-export default UserForm;
+export default RootUserForm;

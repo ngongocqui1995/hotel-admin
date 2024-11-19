@@ -242,6 +242,8 @@ export const ErrorNotify = [
   { url: 'room-types', method: ['patch', 'post', 'delete', 'put'] },
   { url: 'customers', method: ['patch', 'post', 'delete', 'put'] },
   { url: 'rental-vouchers', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'root-users', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'admin-users', method: ['patch', 'post', 'delete', 'put'] },
 ];
 
 export const SuccessNotify = [
@@ -263,6 +265,8 @@ export const SuccessNotify = [
   { url: 'room-types', method: ['patch', 'post', 'delete', 'put'] },
   { url: 'customers', method: ['patch', 'post', 'delete', 'put'] },
   { url: 'rental-vouchers', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'root-users', method: ['patch', 'post', 'delete', 'put'] },
+  { url: 'admin-users', method: ['patch', 'post', 'delete', 'put'] },
 ];
 
 export const loginPath = '/auth/login';
@@ -282,6 +286,8 @@ export enum ENUM_RESOURCE {
   ROOM_TYPE = 'ROOM_TYPE',
   CUSTOMER = 'CUSTOMER',
   RENTAL_VOUCHER = 'RENTAL_VOUCHER',
+  ROOT_USER = 'ROOT_USER',
+  ADMIN_USER = 'ADMIN_USER',
 }
 
 export type ENUM_RESOURCE_KEYS = keyof typeof ENUM_RESOURCE;

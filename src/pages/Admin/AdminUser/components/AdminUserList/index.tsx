@@ -1,8 +1,8 @@
 import LocaleProTable from '@/components/Locale/ProTable';
-import ChangeStatusUser from '@/pages/Admin/User/components/UserList/components/ChangeStatusUser';
-import CreateUser from '@/pages/Admin/User/components/UserList/components/ToolBar/CreateUser';
-import { UserItem } from '@/pages/Admin/User/data';
-import { queryUsers } from '@/pages/Admin/User/service';
+import ChangeStatusAdminUser from '@/pages/Admin/AdminUser/components/AdminUserList/components/ChangeStatusAdminUser';
+import CreateAdminUser from '@/pages/Admin/AdminUser/components/AdminUserList/components/ToolBar/CreateAdminUser';
+import { AdminUserItem } from '@/pages/Admin/AdminUser/data';
+import { queryAdminUsers } from '@/pages/Admin/AdminUser/service';
 import {
   PAGINATE_OPTIONS,
   getCopyTooltip,
@@ -24,38 +24,38 @@ import React, { useEffect, useRef } from 'react';
 import localeEN from './locale/enUS/proTable';
 import localeVN from './locale/viVN/proTable';
 
-const UserList: React.FC = () => {
+const AdminUserList: React.FC = () => {
   const formatMessage = getFormatMessage();
   const formTable = useRef<FormInstance>();
   const actionRef = useRef<ActionType>();
   const dispatch = useDispatch();
   const access = useAccess();
   const { COPY, UPDATE, UPDATE_STATUS, UPDATE_PASSWORD } = ENUM_SCOPE_TYPE;
-  const { USER } = ENUM_RESOURCE;
+  const { CUSTOMER } = ENUM_RESOURCE;
 
   useEffect(() => {
     dispatch({
-      type: 'user/updateUserList',
+      type: 'adminUser/updateAdminUserList',
       payload: {
         reload: () => actionRef.current?.reload(),
       },
     });
   }, []);
 
-  const columns: ProColumns<UserItem>[] = [
+  const columns: ProColumns<AdminUserItem>[] = [
     {
       title: formatMessage({ id: 'pages.keyword', defaultMessage: 'Tìm theo' }),
       dataIndex: 'keyword',
       hideInTable: true,
       formItemProps: {
         tooltip: formatMessage({
-          id: 'pages.Admin.User.UserList.tooltip',
+          id: 'pages.Admin.AdminUser.AdminUserList.tooltip',
           defaultMessage: 'Bạn có thể tìm kiếm theo tên, email, số điện thoại.',
         }),
       },
       fieldProps: {
         placeholder: formatMessage({
-          id: 'pages.Admin.User.UserList.placeholder',
+          id: 'pages.Admin.AdminUser.AdminUserList.placeholder',
           defaultMessage: 'Nhập mã, tên, email, số điện thoại.',
         }),
       },
@@ -65,7 +65,7 @@ const UserList: React.FC = () => {
       dataIndex: 'avatar',
       width: 120,
       search: false,
-      render: (_, record: UserItem) => {
+      render: (_, record: AdminUserItem) => {
         return (
           <Image
             placeholder={
@@ -137,8 +137,8 @@ const UserList: React.FC = () => {
       title: formatMessage({ id: 'pages.status', defaultMessage: 'Trạng thái' }),
       dataIndex: 'status',
       width: 100,
-      renderText: (dom, record: UserItem) => {
-        return <ChangeStatusUser status={dom} record={record} />;
+      renderText: (dom, record: AdminUserItem) => {
+        return <ChangeStatusAdminUser status={dom} record={record} />;
       },
       fieldProps: {
         placeholder: formatMessage({
@@ -151,7 +151,7 @@ const UserList: React.FC = () => {
       },
       valueType: 'select',
       valueEnum: getStatusEnum(),
-      hideInTable: !access.getAccess(USER, [UPDATE_STATUS]),
+      hideInTable: !access.getAccess(CUSTOMER, [UPDATE_STATUS]),
     },
     {
       title: formatMessage({ id: 'pages.options', defaultMessage: 'Tuỳ chỉnh' }),
@@ -160,11 +160,11 @@ const UserList: React.FC = () => {
       align: 'center',
       fixed: 'right',
       width: 90,
-      hideInTable: !access.getAccess(USER, [UPDATE, COPY]),
+      hideInTable: !access.getAccess(CUSTOMER, [UPDATE, COPY]),
       render: (_, record) => [
         <Tooltip
-          className={`${access.getAccessClass(USER, [UPDATE])}`}
-          key="update-user"
+          className={`${access.getAccessClass(CUSTOMER, [UPDATE])}`}
+          key="update-AdminUser"
           title={getUpdateTooltip()}
           color="cyan"
           placement="left"
@@ -172,7 +172,7 @@ const UserList: React.FC = () => {
           <a
             onClick={() => {
               dispatch({
-                type: 'user/updateUserForm',
+                type: 'adminUser/updateAdminUserForm',
                 payload: { itemEdit: record, type: UPDATE },
               });
             }}
@@ -181,8 +181,8 @@ const UserList: React.FC = () => {
           </a>
         </Tooltip>,
         <Tooltip
-          className={`${access.getAccessClass(USER, [COPY])}`}
-          key="copy-user"
+          className={`${access.getAccessClass(CUSTOMER, [COPY])}`}
+          key="copy-AdminUser"
           title={getCopyTooltip()}
           color="cyan"
           placement="left"
@@ -190,7 +190,7 @@ const UserList: React.FC = () => {
           <a
             onClick={() => {
               dispatch({
-                type: 'user/updateUserForm',
+                type: 'adminUser/updateAdminUserForm',
                 payload: { itemEdit: record, type: COPY },
               });
             }}
@@ -199,8 +199,8 @@ const UserList: React.FC = () => {
           </a>
         </Tooltip>,
         <Tooltip
-          className={`${access.getAccessClass(USER, [UPDATE_PASSWORD])}`}
-          key="change-password-user"
+          className={`${access.getAccessClass(CUSTOMER, [UPDATE_PASSWORD])}`}
+          key="change-password-AdminUser"
           title={getUpdatePasswordTooltip()}
           color="cyan"
           placement="left"
@@ -208,7 +208,7 @@ const UserList: React.FC = () => {
           <a
             onClick={() => {
               dispatch({
-                type: 'user/updateUserForm',
+                type: 'adminUser/updateAdminUserForm',
                 payload: { itemEdit: record, type: UPDATE_PASSWORD },
               });
             }}
@@ -223,10 +223,10 @@ const UserList: React.FC = () => {
   return (
     <div>
       <LocaleProTable localeVN={localeVN} localeEN={localeEN}>
-        <ProTable<UserItem>
+        <ProTable<AdminUserItem>
           headerTitle={formatMessage({
-            id: 'pages.Admin.User.UserList.headerTitle',
-            defaultMessage: 'Danh sách người dùng',
+            id: 'pages.Admin.AdminUser.AdminUserList.headerTitle',
+            defaultMessage: 'Danh sách khách hàng',
           })}
           formRef={formTable}
           actionRef={actionRef}
@@ -234,9 +234,9 @@ const UserList: React.FC = () => {
           sticky={true}
           pagination={{ ...PAGINATE_OPTIONS }}
           request={async (params, sort) => {
-            return await queryUsers(params, sort);
+            return await queryAdminUsers(params, sort);
           }}
-          toolBarRender={() => [<CreateUser key="create-user" />]}
+          toolBarRender={() => [<CreateAdminUser key="create-AdminUser" />]}
           columns={columns}
           scroll={scrollTable}
         />
@@ -245,4 +245,4 @@ const UserList: React.FC = () => {
   );
 };
 
-export default UserList;
+export default AdminUserList;
