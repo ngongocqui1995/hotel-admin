@@ -28,7 +28,7 @@ export default [
   },
   {
     path: '/',
-    redirect: '/dashboard',
+    redirect: '/hotel/room',
   },
   {
     path: '*',
