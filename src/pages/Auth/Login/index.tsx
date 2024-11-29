@@ -126,7 +126,8 @@ const Login: React.FC = () => {
                 prefix: <UserOutlined />,
                 style: { maxWidth: '100%' },
               }}
-              placeholder={formatMessage({ id: 'pages.login.username.placeholder' })}
+              // placeholder={formatMessage({ id: 'pages.login.username.placeholder' })}
+              placeholder="root@gmail.com"
               rules={[
                 {
                   required: true,
@@ -140,7 +141,8 @@ const Login: React.FC = () => {
                 size: 'large',
                 prefix: <LockOutlined />,
               }}
-              placeholder={formatMessage({ id: 'pages.login.password.placeholder' })}
+              // placeholder={formatMessage({ id: 'pages.login.password.placeholder' })}
+              placeholder="Root1@"
               rules={[
                 {
                   required: true,
