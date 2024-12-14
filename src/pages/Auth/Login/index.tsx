@@ -1,6 +1,5 @@
 import { useLoginStyles } from '@/pages/Auth/Login/styles';
 import { getFormatMessage, getLocales, saveToken, validationPassWord } from '@/utils/utils';
-import { dashboardPath } from '@/utils/utils.enum';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginFormPage, ProForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-components';
 import { Helmet, SelectLang, history, useModel } from '@umijs/max';
@@ -29,7 +28,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (initialState?.currentUser) {
-      history.push(dashboardPath);
+      history.push('/');
       window.location.reload();
     }
   }, [initialState?.currentUser]);
